@@ -1,0 +1,19 @@
+[phases.setup]
+nixPkgs = ["python39", "postgresql", "nodejs-18_x"]
+
+[phases.install]
+cmds = [
+    "pip install -r requirements.txt",
+    "npm install"
+]
+
+[phases.build]
+cmds = [
+    "echo '=== Building React Frontend ==='",
+    "npm run build 2>&1 | tee build.log || (cat build.log && echo 'Frontend build failed, continuing with API only...')",
+    "echo '=== Initializing Database ==='",
+    "python init_db.py || echo 'DB init failed, will retry at startup'"
+]
+
+[start]
+cmd = "python start.py"

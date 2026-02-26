@@ -1,0 +1,36 @@
+# Environments
+.venv/
+venv/
+venv*/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files and secrets
+.env
+.env.*
+.streamlit/secrets.toml
+
+# Build artifacts
+build/
+# dist/  # Commented out - need dist/ for Railway deployment
+*.egg-info/
+
+# Node modules and frontend
+node_modules/
+.pnpm-store/
+
+# Vite build output
+# dist/  # Commented out - committing built frontend for Railway
+
+# Editor directories
+.vscode/
+.idea/

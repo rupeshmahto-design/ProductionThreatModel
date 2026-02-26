@@ -1,0 +1,34 @@
+services:
+  # FastAPI Backend
+  - type: web
+    name: threat-modeling-api
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt && python init_db.py"
+    startCommand: "uvicorn api:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: https://threat-modeling-ui.onrender.com
+    healthCheckPath: /api/health
+
+  # React Frontend
+  - type: web
+    name: threat-modeling-ui
+    env: static
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://threat-modeling-api.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
